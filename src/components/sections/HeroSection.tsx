@@ -67,19 +67,12 @@ const HeroSection = ({ onStart, liveCount }: HeroSectionProps) => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-primary-foreground leading-tight mb-4"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-white drop-shadow-lg mb-6"
+          style={{ lineHeight: "1.2", letterSpacing: "-0.02em", textShadow: "0 4px 20px rgba(0, 0, 0, 0.3)" }}
         >
-          Nhà nước và Cách mạng Xã hội
+          Sứ mệnh Giai cấp & Bước nhảy Cách mạng
         </motion.h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.6 }}
-          className="text-lg sm:text-xl md:text-2xl text-primary-foreground/90 mb-8 font-body"
-        >
-          Qua lăng kính <span className="font-semibold text-secondary">Chuyển đổi số</span> & Chính phủ điện tử
-        </motion.p>
 
         {/* QR Code */}
         <motion.div

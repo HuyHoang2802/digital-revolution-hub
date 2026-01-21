@@ -1,16 +1,17 @@
 import { useRef, useState } from "react";
 import HeroSection from "@/components/sections/HeroSection";
 import TheorySection from "@/components/sections/TheorySection";
-import CaseStudySection from "@/components/sections/CaseStudySection";
+import NationalityClassSection from "@/components/sections/NationalityClassSection";
 import GameSection from "@/components/sections/GameSection";
-import LeaderboardSection from "@/components/sections/LeaderboardSection";
-import ReferencesSection from "@/components/sections/ReferencesSection";
+import RevolutionSection from "@/components/sections/RevolutionSection";
+import SimulateRevolutionSection from "@/components/sections/SimulateRevolutionSection";
 import { useSessionId } from "@/hooks/useSessionId";
-import { useLiveCount } from "@/hooks/useLiveCount";
+import { useRealtimeLeaderboard } from "@/hooks/useRealtimeLeaderboard";
+import AiChatWidget from "@/components/AiChatWidget";
 
 const Index = () => {
   const sessionId = useSessionId();
-  const liveCount = useLiveCount();
+  const { onlinePlayers } = useRealtimeLeaderboard();
   const contentRef = useRef<HTMLDivElement>(null);
   const [, setGameResult] = useState<{ score: number; total: number } | null>(null);
 
@@ -24,14 +25,15 @@ const Index = () => {
 
   return (
     <main className="min-h-screen">
-      <HeroSection onStart={scrollToContent} liveCount={liveCount} />
+      <HeroSection onStart={scrollToContent} liveCount={onlinePlayers} />
       
       <div ref={contentRef}>
         <TheorySection />
-        <CaseStudySection />
+        <NationalityClassSection />
+        <RevolutionSection />
+        <SimulateRevolutionSection />
         <GameSection sessionId={sessionId} onGameComplete={handleGameComplete} />
-        <LeaderboardSection />
-        <ReferencesSection />
+        <AiChatWidget />
       </div>
     </main>
   );
