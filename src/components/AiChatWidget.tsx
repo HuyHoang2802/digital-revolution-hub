@@ -75,7 +75,7 @@ export default function AiChatWidget() {
           {/* Bubble hint - hidden when panel open */}
           {!open && (
             <div className="absolute -top-0.5 -left-6 xs:-left-7 rotate-[-8deg] bg-white border border-border shadow-md rounded-full px-2 py-1">
-              <span className="text-[8px] xs:text-[9px] sm:text-[11px] font-semibold text-foreground whitespace-nowrap">Hỏi gì ?</span>
+              <span className="text-[8px] xs:text-[9px] sm:text-[11px] font-semibold text-foreground whitespace-nowrap">Bạn muốn hỏi gì ???</span>
             </div>
           )}
         </motion.button>
