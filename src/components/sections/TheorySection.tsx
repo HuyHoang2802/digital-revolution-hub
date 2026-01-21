@@ -89,18 +89,18 @@ const TheorySection = () => {
   };
 
   return (
-    <section className="min-h-screen py-16 px-4 bg-background">
+    <section className="min-h-screen py-12 sm:py-16 px-3 sm:px-4 bg-background">
       <div className="max-w-6xl mx-auto">
         {/* Section Title */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-10 sm:mb-12"
         >
           <h2 
-            className="text-4xl sm:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 mb-6"
-            style={{ fontSize: "2.75rem", lineHeight: 2 }}
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 mb-4 sm:mb-6"
+            style={{ lineHeight: 1.3, letterSpacing: "-0.01em" }}
           >
             Quan hệ giai cấp – dân tộc - nhân loại
           </h2>
@@ -111,12 +111,12 @@ const TheorySection = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-16"
+          className="mb-12 sm:mb-16"
         >
-          <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8 text-foreground">
+          <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-6 sm:mb-8 text-foreground">
             Ba mối quan hệ cốt lõi
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
             {relationshipWindows.map((window, index) => {
               const IconComponent = window.icon;
               return (
@@ -129,34 +129,34 @@ const TheorySection = () => {
                 >
                   <button
                     onClick={() => setSelectedRelationship(window)}
-                    className="w-full h-full p-6 rounded-2xl bg-card border-2 border-border hover:border-primary/50 hover-lift text-left transition-all duration-300 group relative overflow-hidden"
+                    className="w-full h-full p-4 sm:p-6 rounded-xl sm:rounded-2xl bg-card border-2 border-border hover:border-primary/50 hover-lift text-left transition-all duration-300 group relative overflow-hidden active:scale-95 sm:active:scale-100"
                   >
                     {/* Gradient Background */}
                     <div className={`absolute inset-0 bg-gradient-to-br ${window.gradient} opacity-5 group-hover:opacity-10 transition-opacity`} />
                     
                     {/* Content */}
                     <div className="relative z-10">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className={`p-3 rounded-xl bg-gradient-to-br ${window.gradient} shadow-lg`}>
-                          <IconComponent className="h-6 w-6 text-white" />
+                      <div className="flex items-center justify-between mb-3 sm:mb-4">
+                        <div className={`p-2 sm:p-3 rounded-lg sm:rounded-xl bg-gradient-to-br ${window.gradient} shadow-lg flex-shrink-0`}>
+                          <IconComponent className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                         </div>
-                        <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:translate-x-1 transition-transform" />
+                        <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground group-hover:translate-x-1 transition-transform flex-shrink-0 ml-2" />
                       </div>
                       
-                      <h4 className="text-lg font-bold text-foreground mb-2">
+                      <h4 className="text-base sm:text-lg font-bold text-foreground mb-1 sm:mb-2">
                         {window.title}
                       </h4>
                       
-                      <p className={`text-sm font-semibold mb-3 text-transparent bg-clip-text bg-gradient-to-r ${window.gradient}`}>
+                      <p className={`text-xs sm:text-sm font-semibold mb-2 sm:mb-3 text-transparent bg-clip-text bg-gradient-to-r ${window.gradient}`}>
                         {window.subtitle}
                       </p>
                       
-                      <p className="text-sm text-muted-foreground line-clamp-3">
+                      <p className="text-xs sm:text-sm text-muted-foreground line-clamp-3">
                         {window.description}
                       </p>
                       
-                      <div className="mt-4 pt-4 border-t border-border">
-                        <p className="text-xs italic text-muted-foreground">
+                      <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-border">
+                        <p className="text-[10px] sm:text-xs italic text-muted-foreground line-clamp-2">
                           &quot;{window.caption}&quot;
                         </p>
                       </div>

@@ -609,11 +609,11 @@ const NationalityClassSection = () => {
   };
 
   return (
-    <section className="min-h-screen py-20 px-4 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 relative overflow-hidden">
+    <section className="min-h-screen py-12 sm:py-16 md:py-20 px-3 sm:px-4 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          className="absolute top-20 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20"
+          className="absolute top-10 sm:top-20 left-5 sm:left-10 w-32 sm:w-72 h-32 sm:h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{
             x: [0, 100, 0],
             y: [0, -50, 0],
@@ -625,7 +625,7 @@ const NationalityClassSection = () => {
           }}
         />
         <motion.div
-          className="absolute top-40 right-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20"
+          className="absolute top-20 sm:top-40 right-5 sm:right-10 w-32 sm:w-72 h-32 sm:h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{
             x: [0, -100, 0],
             y:  [0, 100, 0],
@@ -637,7 +637,7 @@ const NationalityClassSection = () => {
           }}
         />
         <motion.div
-          className="absolute -bottom-10 left-1/2 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-20"
+          className="absolute -bottom-5 sm:-bottom-10 left-1/2 w-32 sm:w-72 h-32 sm:h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-20"
           animate={{
             x: [0, 50, 0],
             y:  [0, -80, 0],
@@ -660,49 +660,49 @@ const NationalityClassSection = () => {
         {/* Section Title - Enhanced */}
         <motion.div
           variants={itemVariants}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
         >
           <motion.div 
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white mb-6 shadow-lg"
+            className="inline-flex items-center gap-2 sm:gap-3 px-3 sm:px-6 py-2 sm:py-3 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white mb-3 sm:mb-6 shadow-lg text-xs sm:text-base"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <motion.span 
-              className="text-3xl"
+              className="text-2xl sm:text-3xl"
               animate={{ rotate: [0, 10, -10, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
               🚌
             </motion.span>
-            <span className="font-bold tracking-wide text-base">Metaphor Giáo dục</span>
-            <Sparkles className="h-5 w-5" />
+            <span className="font-bold tracking-wide">Metaphor Giáo dục</span>
+            <Sparkles className="h-3 w-3 sm:h-5 sm:w-5 flex-shrink-0" />
           </motion.div>
           
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 mb-6 leading-tight">
+          <h2 className="text-xl sm:text-3xl md:text-5xl lg:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 mb-3 sm:mb-6 leading-tight">
             Dân tộc & Giai cấp
             <br />
-            <span className="text-3xl sm:text-4xl md:text-5xl font-black">Chiếc Xe Bus</span>
+            <span className="text-lg sm:text-2xl md:text-4xl lg:text-5xl font-black">Chiếc Xe Bus</span>
           </h2>
           
-          <p className="text-slate-600 max-w-3xl mx-auto text-base md:text-lg font-medium leading-relaxed">
+          <p className="text-xs sm:text-sm md:text-base text-slate-600 max-w-3xl mx-auto font-medium leading-relaxed">
             Hiểu rõ mối quan hệ <strong className="font-bold text-indigo-600">biện chứng</strong> giữa dân tộc và giai cấp qua một metaphor sinh động
           </p>
         </motion.div>
 
         {/* Main Metaphor Cards - Enhanced */}
         <motion.div 
-          className="grid grid-cols-1 md: grid-cols-2 gap-8 mb-16"
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mb-12 sm:mb-16"
           variants={containerVariants}
         >
           {metaphorCards.map((card, index) => (
-            <motion. div
+            <motion.div
               key={card.id}
               variants={itemVariants}
               whileHover={{ 
                 scale: 1.02,
                 boxShadow: "0 20px 60px -15px rgba(0, 0, 0, 0.3)"
               }}
-              className="group bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-indigo-300 rounded-3xl p-8 overflow-hidden relative shadow-xl transition-all duration-300"
+              className="group bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-indigo-300 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 overflow-hidden relative shadow-xl transition-all duration-300"
             >
               {/* Gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

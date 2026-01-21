@@ -532,7 +532,7 @@ await updateGameSession(score, currentQuestion + 1, false, durationSeconds);
   const currentQ = gameState === "playing" ? questions[currentQuestion] : null;
 
   return (
-    <section className="min-h-screen py-16 px-4 bg-background relative overflow-hidden">
+    <section className="min-h-screen py-12 sm:py-16 px-3 sm:px-4 bg-background relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
         <motion.div
           className="absolute top-20 left-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl"
@@ -572,8 +572,8 @@ await updateGameSession(score, currentQuestion + 1, false, durationSeconds);
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="lg:col-span-2 min-w-0">
             <AnimatePresence mode="wait">
               {gameState === "welcome" && (
                 <motion.div
@@ -581,10 +581,10 @@ await updateGameSession(score, currentQuestion + 1, false, durationSeconds);
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="bg-card border border-border rounded-3xl p-8 md:p-12 text-center shadow-2xl"
+                  className="bg-card border border-border rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-12 text-center shadow-2xl"
                 >
-                  <h3 className="text-3xl font-black text-foreground mb-4">Chào mừng!</h3>
-                  <p className="text-muted-foreground mb-8 max-w-md mx-auto">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-foreground mb-2 sm:mb-4">Chào mừng!</h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6 md:mb-8 max-w-md mx-auto">
                     Kiểm tra kiến thức lý luận chính trị của bạn. Trả lời nhanh và chính xác!
                   </p>
 
@@ -663,13 +663,13 @@ await updateGameSession(score, currentQuestion + 1, false, durationSeconds);
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -50 }}
-                    className="bg-card border border-border rounded-3xl p-6 md:p-10 shadow-2xl"
+                    className="bg-card border border-border rounded-2xl p-4 sm:p-6 md:p-10 shadow-lg"
                   >
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50 border border-border mb-6">
                       <span className="text-sm text-muted-foreground italic">{currentQ.scenario}</span>
                     </div>
 
-                    <h3 className="text-xl md:text-2xl font-bold text-foreground mb-8 leading-relaxed">
+                    <h3 className="text-base sm:text-xl md:text-2xl font-bold text-foreground mb-6 sm:mb-8 leading-relaxed">
                       {currentQ.question}
                     </h3>
 
@@ -752,7 +752,7 @@ await updateGameSession(score, currentQuestion + 1, false, durationSeconds);
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="bg-card border-2 border-red-500/50 rounded-3xl p-8 md:p-12 text-center shadow-2xl"
+                  className="bg-card border-2 border-red-500/50 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-12 text-center shadow-2xl"
                 >
                   <div className="w-24 h-24 rounded-full bg-red-500/20 flex items-center justify-center mx-auto mb-6">
                     <AlertTriangle className="h-12 w-12 text-red-500" />
@@ -776,28 +776,28 @@ await updateGameSession(score, currentQuestion + 1, false, durationSeconds);
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="bg-card border-2 border-green-500/50 rounded-3xl p-8 md:p-12 text-center shadow-2xl"
+                  className="bg-card border-2 border-green-500/50 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-12 text-center shadow-2xl"
                 >
-                  <div className="w-28 h-28 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
-                    <Trophy className="h-14 w-14 text-green-500" />
+                  <div className="w-20 sm:w-28 h-20 sm:h-28 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                    <Trophy className="h-10 sm:h-14 w-10 sm:w-14 text-green-500" />
                   </div>
-                  <h3 className="text-3xl md:text-4xl font-black text-green-600 mb-4">Hoàn thành! 🎉</h3>
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-green-600 mb-3 sm:mb-4">Hoàn thành! 🎉</h3>
 
-                  <div className="bg-muted/50 rounded-2xl p-6 mb-6 border border-border">
-                    <p className="text-sm text-muted-foreground mb-2">Người thực hiện:</p>
-                    <p className="text-2xl font-black text-primary mb-4">{playerName}</p>
+                  <div className="bg-muted/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6 border border-border">
+                    <p className="text-xs sm:text-sm text-muted-foreground mb-1 sm:mb-2">Người thực hiện:</p>
+                    <p className="text-xl sm:text-2xl font-black text-primary mb-3 sm:mb-4 truncate">{playerName}</p>
 
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="p-3 rounded-xl bg-background/50">
-                        <p className="text-xs text-muted-foreground mb-1">Điểm số</p>
-                        <p className="text-3xl font-black text-foreground">
+                    <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                      <div className="p-2 sm:p-3 rounded-lg sm:rounded-xl bg-background/50">
+                        <p className="text-[10px] sm:text-xs text-muted-foreground mb-1">Điểm số</p>
+                        <p className="text-2xl sm:text-3xl font-black text-foreground">
                           {score}/{questions.length}
                         </p>
                       </div>
 
-                      <div className="p-3 rounded-xl bg-background/50">
-                        <p className="text-xs text-muted-foreground mb-1">Thời gian</p>
-                        <p className="text-3xl font-black text-foreground font-mono">{finishTime}s</p>
+                      <div className="p-2 sm:p-3 rounded-lg sm:rounded-xl bg-background/50">
+                        <p className="text-[10px] sm:text-xs text-muted-foreground mb-1">Thời gian</p>
+                        <p className="text-2xl sm:text-3xl font-black text-foreground font-mono">{finishTime}s</p>
                       </div>
                     </div>
                   </div>
