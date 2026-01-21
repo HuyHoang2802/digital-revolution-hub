@@ -15,12 +15,13 @@ function fakeReply(userText: string) {
   if (/supabase/i.test(userText)) {
     return "Supabase giúp lưu dữ liệu + realtime. Khi bạn sẵn sàng làm API, mình sẽ nối AI thật vào.";
   }
-  return `Mình đã nhận: "${userText}". (Demo UI — chưa nối API)`;
+  return `Mình đã nhận: "${userText}"`;
 }
 
 export default function AiChatWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState<ChatMsg[]>(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -28,7 +29,7 @@ export default function AiChatWidget() {
     } catch {
       // ignore
     }
-    return [{ role: "assistant", content: "Chào bạn! Mình là trợ lý AI. Bạn cần mình giúp gì?" }];
+    return [{ role: "assistant", content: "Chào bạn! Mình là Triết Gia AI. Bạn cần mình giúp gì?" }];
   });
 
   const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -40,17 +41,54 @@ export default function AiChatWidget() {
 
   const canSend = useMemo(() => input.trim().length > 0, [input]);
 
-  const send = () => {
-    if (!canSend) return;
+  // helper convert history
+  const toConversationHistory = (msgs: ChatMsg[]) =>
+    msgs.map((m) => `${m.role === "user" ? "User" : "Assistant"}: ${m.content}`);
+
+  const send = async () => {
+    if (!canSend || loading) return;
 
     const userText = input.trim();
     setInput("");
 
-    setMessages((prev) => [
-      ...prev,
-      { role: "user", content: userText },
-      { role: "assistant", content: fakeReply(userText) },
-    ]);
+    // cập nhật UI trước
+    const nextMessages: ChatMsg[] = [...messages, { role: "user", content: userText }];
+    setMessages(nextMessages);
+
+    setLoading(true);
+    try {
+      const base = import.meta.env.VITE_AI_API_BASE_URL as string | undefined;
+      if (!base) throw new Error("Missing VITE_AI_API_BASE_URL");
+
+      const res = await fetch(`${base}/chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: userText,
+          conversation_history: toConversationHistory(nextMessages),
+        }),
+      });
+
+      if (!res.ok) {
+        const errText = await res.text().catch(() => "");
+        throw new Error(errText || `HTTP ${res.status}`);
+      }
+
+      // API trả về string thuần (JSON string hoặc plain text)
+      const contentType = res.headers.get("content-type") || "";
+      const reply =
+        contentType.includes("application/json") ? ((await res.json()) as string) : await res.text();
+
+      setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+    } catch (e) {
+      console.error(e);
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: "Không gọi được AI. (Có thể lỗi CORS/ngrok). Bạn thử lại nhé." },
+      ]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -100,8 +138,7 @@ export default function AiChatWidget() {
                   <img src="/AI.png" alt="AI Avatar" className="h-full w-full object-contain" />
                 </div>
                 <div className="leading-tight min-w-0">
-                  <p className="font-bold text-foreground text-xs xs:text-sm truncate">Trợ lý AI</p>
-                  <p className="text-[8px] xs:text-[9px] text-muted-foreground truncate">Demo UI (chưa nối API)</p>
+                  <p className="font-bold text-foreground text-xs xs:text-sm truncate">Triết Gia AI</p>
                 </div>
               </div>
               <Button 
@@ -145,11 +182,11 @@ export default function AiChatWidget() {
               />
               <Button 
                 onClick={send} 
-                disabled={!canSend} 
+                disabled={!canSend || loading} 
                 className="gap-1 xs:gap-2 px-2 xs:px-3 h-8 xs:h-9 sm:h-10 text-xs xs:text-sm flex-shrink-0"
               >
                 <Send className="h-3 w-3 xs:h-3.5 xs:w-3.5 sm:h-4 sm:w-4" />
-                <span className="hidden xs:inline">Gửi</span>
+                <span className="hidden xs:inline">{loading ? "Đang gửi..." : "Gửi"}</span>
               </Button>
             </div>
           </motion.div>
