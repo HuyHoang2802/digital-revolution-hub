@@ -54,7 +54,6 @@ export default function AiChatWidget() {
     const userText = input.trim();
     setInput("");
 
-    // cập nhật UI trước
     const nextMessages: ChatMsg[] = [...messages, { role: "user", content: userText }];
     setMessages(nextMessages);
 
@@ -65,24 +64,34 @@ export default function AiChatWidget() {
 
       const res = await fetch(`${base}/chat`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          // optional: đôi khi ngrok cần header này để bỏ trang warning
+          "ngrok-skip-browser-warning": "true",
+        },
         body: JSON.stringify({
           message: userText,
           conversation_history: toConversationHistory(nextMessages),
         }),
       });
 
+      // luôn đọc body 1 lần để lấy lỗi rõ ràng
+      const contentType = res.headers.get("content-type") || "";
+      const body = contentType.includes("application/json") ? await res.json() : await res.text();
+
       if (!res.ok) {
-        const errText = await res.text().catch(() => "");
-        throw new Error(errText || `HTTP ${res.status}`);
+        throw new Error(typeof body === "string" ? body : JSON.stringify(body));
       }
 
-      // API trả về string thuần (JSON string hoặc plain text)
-      const contentType = res.headers.get("content-type") || "";
-      const reply =
-        contentType.includes("application/json") ? ((await res.json()) as string) : await res.text();
+      // BE trả object { response: "..." } theo swagger
+      const replyText =
+        typeof body === "string"
+          ? body
+          : typeof body?.response === "string"
+            ? body.response
+            : JSON.stringify(body);
 
-      setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
+      setMessages((prev) => [...prev, { role: "assistant", content: replyText }]);
     } catch (e) {
       console.error(e);
       setMessages((prev) => [
