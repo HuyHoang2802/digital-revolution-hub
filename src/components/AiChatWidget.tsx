@@ -43,7 +43,10 @@ export default function AiChatWidget() {
 
   // helper convert history
   const toConversationHistory = (msgs: ChatMsg[]) =>
-    msgs.map((m) => `${m.role === "user" ? "User" : "Assistant"}: ${m.content}`);
+    msgs.map((m) => ({
+      role: m.role,
+      content: m.content,
+    }));
 
   const send = async () => {
     if (!canSend || loading) return;
