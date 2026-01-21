@@ -188,31 +188,31 @@ const TheorySection = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/50 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center p-2 xs:p-3 sm:p-4 bg-foreground/50 backdrop-blur-sm"
             onClick={() => setSelectedRelationship(null)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity:  1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="w-full max-w-2xl bg-card rounded-2xl shadow-2xl border-2 border-border overflow-hidden"
+              className="w-full max-w-2xl bg-card rounded-xl xs:rounded-2xl shadow-2xl border-2 border-border overflow-hidden max-h-[95vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header with Gradient */}
-              <div className={`relative p-6 bg-gradient-to-br ${selectedRelationship.gradient}`}>
+              <div className={`relative p-3 xs:p-4 sm:p-6 bg-gradient-to-br ${selectedRelationship.gradient}`}>
                 <div className="absolute inset-0 bg-black/20" />
-                <div className="relative z-10 flex justify-between items-start">
-                  <div>
-                    <div className="flex items-center gap-3 mb-2">
+                <div className="relative z-10 flex justify-between items-start gap-2 xs:gap-3">
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 mb-1 xs:mb-2 flex-wrap">
                       {(() => {
                         const IconComponent = selectedRelationship.icon;
-                        return <IconComponent className="h-8 w-8 text-white" />;
+                        return <IconComponent className="h-5 w-5 xs:h-6 xs:w-6 sm:h-8 sm:w-8 text-white flex-shrink-0" />;
                       })()}
-                      <h3 className="text-2xl font-bold text-white">
+                      <h3 className="text-base xs:text-lg sm:text-2xl font-bold text-white break-words">
                         {selectedRelationship.title}
                       </h3>
                     </div>
-                    <p className="text-white/90 font-semibold text-lg">
+                    <p className="text-white/90 font-semibold text-xs xs:text-sm sm:text-lg break-words">
                       {selectedRelationship.subtitle}
                     </p>
                   </div>
@@ -220,43 +220,43 @@ const TheorySection = () => {
                     variant="ghost"
                     size="icon"
                     onClick={() => setSelectedRelationship(null)}
-                    className="text-white hover:bg-white/20"
+                    className="text-white hover:bg-white/20 flex-shrink-0 h-7 w-7 xs:h-8 xs:w-8 sm:h-10 sm:w-10"
                   >
-                    <X className="h-5 w-5" />
+                    <X className="h-3.5 w-3.5 xs:h-4 xs:w-4 sm:h-5 sm:w-5" />
                   </Button>
                 </div>
               </div>
 
               {/* Content */}
-              <div className="p-6">
-                <p className="text-foreground leading-relaxed mb-6">
+              <div className="p-3 xs:p-4 sm:p-6 space-y-3 xs:space-y-4 sm:space-y-6">
+                <p className="text-foreground leading-relaxed text-xs xs:text-sm sm:text-base">
                   {selectedRelationship.description}
                 </p>
 
-                <div className="space-y-3 mb-6">
-                  <h4 className="font-semibold text-foreground mb-3">Các điểm chính: </h4>
+                <div className="space-y-1.5 xs:space-y-2 sm:space-y-3">
+                  <h4 className="font-semibold text-foreground mb-1.5 xs:mb-2 sm:mb-3 text-xs xs:text-sm sm:text-base">Các điểm chính: </h4>
                   {selectedRelationship.examples.map((example, index) => (
                     <motion.div
                       key={index}
                       initial={{ opacity:  0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="flex items-start gap-3 p-3 rounded-lg bg-muted/50"
+                      className="flex items-start gap-1.5 xs:gap-2 sm:gap-3 p-2 xs:p-2.5 sm:p-3 rounded-lg bg-muted/50"
                     >
-                      <div className={`mt-1 w-2 h-2 rounded-full bg-gradient-to-br ${selectedRelationship.gradient} flex-shrink-0`} />
-                      <p className="text-sm text-foreground">{example}</p>
+                      <div className={`mt-0.5 xs:mt-1 w-1.5 h-1.5 xs:w-2 xs:h-2 rounded-full bg-gradient-to-br ${selectedRelationship.gradient} flex-shrink-0`} />
+                      <p className="text-[10px] xs:text-xs sm:text-sm text-foreground break-words">{example}</p>
                     </motion.div>
                   ))}
                 </div>
 
-                <div className={`p-4 rounded-xl bg-muted/50 border-l-4 border-primary`}>
-                  <p className="text-sm italic text-muted-foreground text-center">
-                    {selectedRelationship.caption}
+                <div className={`p-2.5 xs:p-3 sm:p-4 rounded-lg xs:rounded-xl bg-muted/50 border-l-4 border-primary`}>
+                  <p className="text-[9px] xs:text-xs sm:text-sm italic text-muted-foreground text-center break-words">
+                    "{selectedRelationship.caption}"
                   </p>
                 </div>
               </div>
             </motion.div>
-          </motion. div>
+          </motion.div>
         )}
       </AnimatePresence>
     </section>

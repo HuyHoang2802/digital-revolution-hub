@@ -55,8 +55,8 @@ export default function AiChatWidget() {
 
   return (
     <>
-      {/* Floating character button (use your image: public/AI.png) */}
-      <div className="fixed bottom-3 sm:bottom-4 right-3 sm:right-4 z-[9999]">
+      {/* Floating character button - mobile first */}
+      <div className="fixed bottom-2 right-2 xs:bottom-3 xs:right-3 sm:bottom-4 sm:right-4 z-[9999]">
         <motion.button
           type="button"
           whileHover={{ scale: 1.05, y: -2 }}
@@ -68,20 +68,20 @@ export default function AiChatWidget() {
           <img
             src="/AI.png"
             alt="AI"
-            className="w-16 h-16 sm:w-[88px] sm:h-[88px] object-contain select-none"
+            className="w-14 h-14 xs:w-16 xs:h-16 sm:w-[88px] sm:h-[88px] object-contain select-none"
             draggable={false}
           />
 
-          {/* Bubble "???" like your screenshot */}
+          {/* Bubble hint - hidden when panel open */}
           {!open && (
-            <div className="absolute -top-1 -left-6 sm:-left-8 rotate-[-8deg] bg-white border border-border shadow-md rounded-full px-2 py-1">
-              <span className="text-[9px] sm:text-[11px] font-semibold text-foreground whitespace-nowrap">Hỏi gì ?</span>
+            <div className="absolute -top-0.5 -left-6 xs:-left-7 rotate-[-8deg] bg-white border border-border shadow-md rounded-full px-2 py-1">
+              <span className="text-[8px] xs:text-[9px] sm:text-[11px] font-semibold text-foreground whitespace-nowrap">Hỏi gì ?</span>
             </div>
           )}
         </motion.button>
       </div>
 
-      {/* Panel */}
+      {/* Chat Panel - mobile-first bottom sheet */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -89,30 +89,39 @@ export default function AiChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
             transition={{ duration: 0.16 }}
-            className="fixed bottom-24 sm:bottom-28 right-3 sm:right-10 z-[9999] w-[calc(100%-1.5rem)] sm:w-[420px] max-w-md sm:max-w-none overflow-hidden rounded-2xl border border-border bg-card shadow-2xl"
+            className="fixed z-[9999] overflow-hidden border border-border bg-card shadow-2xl rounded-2xl
+              left-2 right-2 bottom-20 xs:bottom-24
+              sm:left-auto sm:right-6 sm:w-[420px] sm:bottom-28"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 border-b border-border">
-              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-full overflow-hidden border border-border bg-white flex-shrink-0">
+            <div className="flex items-center justify-between px-3 xs:px-4 py-2 xs:py-3 border-b border-border gap-2">
+              <div className="flex items-center gap-2 xs:gap-3 min-w-0 flex-1">
+                <div className="h-7 w-7 xs:h-8 xs:w-8 sm:h-9 sm:w-9 rounded-full overflow-hidden border border-border bg-white flex-shrink-0">
                   <img src="/AI.png" alt="AI Avatar" className="h-full w-full object-contain" />
                 </div>
                 <div className="leading-tight min-w-0">
-                  <p className="font-bold text-foreground text-sm sm:text-base truncate">Trợ lý AI</p>
-                  <p className="text-[10px] sm:text-xs text-muted-foreground truncate">Demo UI (chưa nối API)</p>
+                  <p className="font-bold text-foreground text-xs xs:text-sm truncate">Trợ lý AI</p>
+                  <p className="text-[8px] xs:text-[9px] text-muted-foreground truncate">Demo UI (chưa nối API)</p>
                 </div>
               </div>
-              <Button variant="ghost" size="icon" onClick={() => setOpen(false)} aria-label="Close" className="h-8 w-8 sm:h-9 sm:w-9 flex-shrink-0">
-                <X className="h-4 w-4 sm:h-5 sm:w-5" />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={() => setOpen(false)} 
+                aria-label="Close"
+                className="h-7 w-7 xs:h-8 xs:w-8 sm:h-9 sm:w-9 flex-shrink-0"
+              >
+                <X className="h-3.5 w-3.5 xs:h-4 xs:w-4 sm:h-5 sm:w-5" />
               </Button>
             </div>
 
-            {/* Messages */}
-            <div className="h-64 sm:h-[360px] overflow-y-auto px-2 sm:px-3 py-2 sm:py-3 space-y-2">
+            {/* Messages - responsive height */}
+            <div className="overflow-y-auto px-2 xs:px-3 py-2 xs:py-3 space-y-2
+              max-h-[50vh] xs:max-h-[55vh] sm:h-[360px]">
               {messages.map((m, idx) => (
                 <div key={idx} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                   <div
-                    className={`max-w-[85%] rounded-2xl px-3 py-2 text-xs sm:text-sm leading-relaxed ${
+                    className={`max-w-[85%] rounded-2xl px-3 py-2 text-xs xs:text-sm leading-relaxed ${
                       m.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
                     }`}
                   >
@@ -124,19 +133,23 @@ export default function AiChatWidget() {
             </div>
 
             {/* Input */}
-            <div className="border-t border-border p-2 sm:p-3 flex gap-2">
+            <div className="border-t border-border p-2 xs:p-3 flex gap-1 xs:gap-2">
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Nhập..."
-                className="text-xs sm:text-sm h-8 sm:h-9"
+                className="text-xs xs:text-sm h-8 xs:h-9 sm:h-10"
                 onKeyDown={(e) => {
                   if (e.key === "Enter") send();
                 }}
               />
-              <Button onClick={send} disabled={!canSend} className="gap-1 sm:gap-2 px-2 sm:px-3 h-8 sm:h-9 text-xs sm:text-sm">
-                <Send className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
-                <span className="hidden sm:inline">Gửi</span>
+              <Button 
+                onClick={send} 
+                disabled={!canSend} 
+                className="gap-1 xs:gap-2 px-2 xs:px-3 h-8 xs:h-9 sm:h-10 text-xs xs:text-sm flex-shrink-0"
+              >
+                <Send className="h-3 w-3 xs:h-3.5 xs:w-3.5 sm:h-4 sm:w-4" />
+                <span className="hidden xs:inline">Gửi</span>
               </Button>
             </div>
           </motion.div>

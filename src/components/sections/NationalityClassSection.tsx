@@ -806,50 +806,52 @@ const NationalityClassSection = () => {
                   transition={{ duration: 0.3 }}
                   className="overflow-hidden"
                 >
-                  <div className="bg-gradient-to-br from-slate-50 to-blue-50 border-2 border-indigo-200 rounded-2xl p-8 shadow-lg">
+                  <div className="bg-gradient-to-br from-slate-50 to-blue-50 border-2 border-indigo-200 rounded-2xl p-4 xs:p-6 sm:p-8 shadow-lg">
                     <button
                       onClick={() => setSelectedScenario(null)}
-                      className="text-slate-400 hover:text-slate-600 mb-6 text-2xl font-bold transition-colors hover:rotate-90 inline-block duration-300"
+                      className="text-slate-400 hover:text-slate-600 mb-4 xs:mb-6 text-2xl font-bold transition-colors hover:rotate-90 inline-block duration-300"
                     >
                       ✕
                     </button>
-                    <div className="grid grid-cols-1 md: grid-cols-2 gap-10">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 xs:gap-6 sm:gap-8 md:gap-10">
                       <motion.div 
-                        className="h-80 bg-white rounded-2xl flex items-center justify-center p-6 shadow-md"
+                        className="h-48 xs:h-56 sm:h-64 md:h-80 bg-white rounded-2xl flex items-center justify-center p-4 xs:p-5 sm:p-6 shadow-md"
                         initial={{ scale:  0.9 }}
                         animate={{ scale: 1 }}
                         transition={{ type: "spring", stiffness:  200 }}
                       >
                         <ScenarioVisual scenarioIndex={selectedScenario} />
                       </motion. div>
-                      <div className="flex flex-col justify-center">
-                        <div className="flex items-start gap-5 mb-6">
+                      <div className="flex flex-col justify-start w-full">
+                        <div className="inline-flex items-center gap-2 xs:gap-3 mb-3 xs:mb-4">
                           <motion.div 
-                            className={`p-4 rounded-2xl ${
+                            className={`p-2.5 xs:p-3 rounded-xl flex-shrink-0 ${
                               selectedScenario === 2 ? "bg-emerald-100 text-emerald-600" : "bg-red-100 text-red-600"
-                            } shadow-md`}
-                            whileHover={{ rotate: 360 }}
+                            } shadow-sm`}
+                            whileHover={{ rotate: 360, scale: 1.1 }}
                             transition={{ duration: 0.5 }}
                           >
-                            {scenarios[selectedScenario].icon}
-                          </motion.div>
-                          <div className="flex-1">
-                            <h4 className="text-2xl md:text-3xl font-bold tracking-tight mb-5 text-slate-800">
-                              {scenarios[selectedScenario].title}
-                            </h4>
-                            <div className="space-y-3 mb-5">
-                              <p className="text-slate-700 font-medium">
-                                <strong className="font-bold text-indigo-600">Tài xế:  </strong> {scenarios[selectedScenario]. driver}
-                              </p>
-                              <p className="text-slate-700 font-medium">
-                                <strong className="font-bold text-indigo-600">Hậu quả: </strong> {scenarios[selectedScenario].consequence}
-                              </p>
+                            <div className="w-5 h-5 xs:w-6 xs:h-6 flex items-center justify-center">
+                              {scenarios[selectedScenario].icon}
                             </div>
-                            <p className="text-slate-600 leading-relaxed text-sm md:text-base font-medium bg-white/70 p-4 rounded-xl">
-                              {scenarios[selectedScenario].description}
-                            </p>
-                          </div>
+                          </motion.div>
+                          <h4 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-slate-800 leading-snug">
+                            {scenarios[selectedScenario].title}
+                          </h4>
                         </div>
+                        <div className="space-y-2 xs:space-y-2.5 mb-3 xs:mb-4 bg-white/60 rounded-lg xs:rounded-xl p-2.5 xs:p-3 sm:p-4">
+                          <p className="text-xs xs:text-sm md:text-base text-slate-700 font-medium break-words">
+                            <strong className="font-bold text-indigo-600">👤 Tài xế:</strong> 
+                            <span className="ml-1">{scenarios[selectedScenario].driver}</span>
+                          </p>
+                          <p className="text-xs xs:text-sm md:text-base text-slate-700 font-medium break-words">
+                            <strong className="font-bold text-indigo-600">⚠️ Hậu quả:</strong> 
+                            <span className="ml-1">{scenarios[selectedScenario].consequence}</span>
+                          </p>
+                        </div>
+                        <p className="text-xs xs:text-sm md:text-base text-slate-600 leading-relaxed font-medium bg-gradient-to-br from-white/80 to-blue-50/80 p-3 xs:p-4 rounded-lg xs:rounded-xl border border-blue-100/50 break-words">
+                          {scenarios[selectedScenario].description}
+                        </p>
                       </div>
                     </div>
                   </div>

@@ -532,15 +532,15 @@ await updateGameSession(score, currentQuestion + 1, false, durationSeconds);
   const currentQ = gameState === "playing" ? questions[currentQuestion] : null;
 
   return (
-    <section className="min-h-screen py-12 sm:py-16 px-3 sm:px-4 bg-background relative overflow-hidden">
+    <section className="min-h-screen py-10 xs:py-12 sm:py-14 md:py-16 px-2 xs:px-3 sm:px-4 bg-background relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
         <motion.div
-          className="absolute top-20 left-10 w-96 h-96 bg-primary/10 rounded-full blur-3xl"
+          className="absolute top-8 xs:top-12 sm:top-16 md:top-20 left-4 xs:left-6 sm:left-10 w-40 xs:w-56 sm:w-80 md:w-96 h-40 xs:h-56 sm:h-80 md:h-96 bg-primary/10 rounded-full blur-3xl"
           animate={{ y: [0, 30, 0], x: [0, 20, 0] }}
           transition={{ duration: 8, repeat: Infinity }}
         />
         <motion.div
-          className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl"
+          className="absolute bottom-8 xs:bottom-12 sm:bottom-16 md:bottom-20 right-4 xs:right-6 sm:right-10 w-40 xs:w-56 sm:w-80 md:w-96 h-40 xs:h-56 sm:h-80 md:h-96 bg-accent/10 rounded-full blur-3xl"
           animate={{ y: [0, -30, 0], x: [0, -20, 0] }}
           transition={{ duration: 8, repeat: Infinity, delay: 1 }}
         />
@@ -551,28 +551,28 @@ await updateGameSession(score, currentQuestion + 1, false, durationSeconds);
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8 xs:mb-10 sm:mb-12"
         >
           <motion.div
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 border border-primary/20 mb-4"
+            className="inline-flex items-center gap-1.5 xs:gap-2 sm:gap-2 px-2.5 xs:px-3.5 sm:px-5 py-1.5 xs:py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 border border-primary/20 mb-2 xs:mb-3 sm:mb-4 text-xs xs:text-sm sm:text-base"
           >
-            <Gamepad2 className="h-5 w-5 text-primary" />
-            <span className="font-semibold text-foreground">Mini-Game Tương Tác</span>
+            <Gamepad2 className="h-3.5 w-3.5 xs:h-4 xs:w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
+            <span className="font-semibold text-foreground whitespace-nowrap">Mini-Game Tương Tác</span>
           </motion.div>
           <h2
-            className="text-4xl sm:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 mb-4"
-            style={{ lineHeight: 1.3 }}
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 mb-2 xs:mb-3 sm:mb-4"
+            style={{ lineHeight: 1.3, letterSpacing: "-0.01em" }}
           >
             The Policymaker
           </h2>
-          <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+          <p className="text-xs xs:text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl mx-auto">
             Đưa ra quyết định đúng đắn để dẫn dắt xã hội phát triển!
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 xs:gap-4 sm:gap-5 md:gap-6">
           <div className="lg:col-span-2 min-w-0">
             <AnimatePresence mode="wait">
               {gameState === "welcome" && (
