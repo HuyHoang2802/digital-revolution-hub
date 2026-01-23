@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { AlertTriangle, CheckCircle, Zap, Sparkles, Star } from "lucide-react";
+import { AlertTriangle, CheckCircle, Zap, Sparkles, Star, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface MetaphorCard {
   id: string;
@@ -588,6 +589,7 @@ const VietnamJourneyMap = () => {
 
 const NationalityClassSection = () => {
   const [selectedScenario, setSelectedScenario] = useState<number | null>(null);
+  const [selectedMetaphor, setSelectedMetaphor] = useState<MetaphorCard | null>(null);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -702,7 +704,8 @@ const NationalityClassSection = () => {
                 scale: 1.02,
                 boxShadow: "0 20px 60px -15px rgba(0, 0, 0, 0.3)"
               }}
-              className="group bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-indigo-300 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 overflow-hidden relative shadow-xl transition-all duration-300"
+              onClick={() => setSelectedMetaphor(card)}
+              className="group bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-indigo-300 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 overflow-hidden relative shadow-xl transition-all duration-300 cursor-pointer"
             >
               {/* Gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -763,10 +766,22 @@ const NationalityClassSection = () => {
               <DialecticalVisualization />
             </div>
 
+            {/* Scenario Cards Intro - Enhanced */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-8"
+            >
+              <p className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text">
+                Hãy chọn kết quả bạn muốn thấy 👇
+              </p>
+            </motion.div>
+
             {/* Scenario Cards - Enhanced */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
               {scenarios.map((scenario, idx) => (
-                <motion. button
+                <motion.button
                   key={idx}
                   whileHover={{ scale: 1.03, y: -5 }}
                   whileTap={{ scale: 0.98 }}
@@ -775,9 +790,7 @@ const NationalityClassSection = () => {
                     idx === 2
                       ? "bg-gradient-to-br from-emerald-50 to-green-100 border-emerald-300 hover:border-emerald-400"
                       : "bg-gradient-to-br from-red-50 to-rose-100 border-red-300 hover:border-red-400"
-                  } border-2 rounded-2xl p-6 cursor-pointer text-left transition-all duration-300 shadow-lg hover:shadow-xl ${
-                    selectedScenario === idx ? 'ring-4 ring-indigo-300' : ''
-                  }`}
+                  } border-2 rounded-2xl p-6 cursor-pointer text-left transition-all duration-300 shadow-lg hover:shadow-xl`}
                 >
                   <div className="h-36 mb-4 bg-white/70 rounded-xl flex items-center justify-center shadow-sm overflow-hidden">
                     {idx === 2 ?  (
@@ -792,72 +805,134 @@ const NationalityClassSection = () => {
                     {scenario.title}
                   </h4>
                   <p className="text-xs text-slate-600 font-semibold tracking-wide">{scenario.consequence}</p>
-                </motion. button>
+                </motion.button>
               ))}
             </div>
 
-            {/* Scenario Details - Enhanced */}
-            <AnimatePresence mode="wait">
+            {/* Scenario Modal - Enhanced */}
+            <AnimatePresence>
               {selectedScenario !== null && (
-                <motion. div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="overflow-hidden"
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 z-50 flex items-center justify-center p-2 xs:p-3 sm:p-4 bg-foreground/50 backdrop-blur-sm"
+                  onClick={() => setSelectedScenario(null)}
                 >
-                  <div className="bg-gradient-to-br from-slate-50 to-blue-50 border-2 border-indigo-200 rounded-2xl p-4 xs:p-6 sm:p-8 shadow-lg">
-                    <button
-                      onClick={() => setSelectedScenario(null)}
-                      className="text-slate-400 hover:text-slate-600 mb-4 xs:mb-6 text-2xl font-bold transition-colors hover:rotate-90 inline-block duration-300"
-                    >
-                      ✕
-                    </button>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 xs:gap-6 sm:gap-8 md:gap-10">
-                      <motion.div 
-                        className="h-48 xs:h-56 sm:h-64 md:h-80 bg-white rounded-2xl flex items-center justify-center p-4 xs:p-5 sm:p-6 shadow-md"
-                        initial={{ scale:  0.9 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: "spring", stiffness:  200 }}
-                      >
-                        <ScenarioVisual scenarioIndex={selectedScenario} />
-                      </motion. div>
-                      <div className="flex flex-col justify-start w-full">
-                        <div className="inline-flex items-center gap-2 xs:gap-3 mb-3 xs:mb-4">
-                          <motion.div 
-                            className={`p-2.5 xs:p-3 rounded-xl flex-shrink-0 ${
-                              selectedScenario === 2 ? "bg-emerald-100 text-emerald-600" : "bg-red-100 text-red-600"
-                            } shadow-sm`}
-                            whileHover={{ rotate: 360, scale: 1.1 }}
-                            transition={{ duration: 0.5 }}
-                          >
-                            <div className="w-5 h-5 xs:w-6 xs:h-6 flex items-center justify-center">
-                              {scenarios[selectedScenario].icon}
-                            </div>
-                          </motion.div>
-                          <h4 className="text-lg xs:text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-slate-800 leading-snug">
-                            {scenarios[selectedScenario].title}
-                          </h4>
+                  <motion.div
+                    initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                    animate={{ scale: 1, opacity: 1, y: 0 }}
+                    exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                    className="w-full max-w-3xl bg-card rounded-xl xs:rounded-2xl shadow-2xl border-2 border-border overflow-hidden max-h-[95vh] overflow-y-auto"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {/* Header with Gradient */}
+                    <div className={`relative p-3 xs:p-4 sm:p-6 bg-gradient-to-br ${
+                      selectedScenario === 2 
+                        ? 'from-emerald-500 via-green-500 to-teal-500' 
+                        : 'from-red-500 via-rose-500 to-pink-500'
+                    }`}>
+                      <div className="absolute inset-0 bg-black/20" />
+                      <div className="relative z-10 flex justify-between items-start gap-2 xs:gap-3">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-3 mb-1 xs:mb-2 flex-wrap">
+                            {scenarios[selectedScenario].icon}
+                            <h3 className="text-base xs:text-lg sm:text-2xl font-bold text-white break-words">
+                              {scenarios[selectedScenario].title}
+                            </h3>
+                          </div>
                         </div>
-                        <div className="space-y-2 xs:space-y-2.5 mb-3 xs:mb-4 bg-white/60 rounded-lg xs:rounded-xl p-2.5 xs:p-3 sm:p-4">
-                          <p className="text-xs xs:text-sm md:text-base text-slate-700 font-medium break-words">
-                            <strong className="font-bold text-indigo-600">👤 Tài xế:</strong> 
-                            <span className="ml-1">{scenarios[selectedScenario].driver}</span>
-                          </p>
-                          <p className="text-xs xs:text-sm md:text-base text-slate-700 font-medium break-words">
-                            <strong className="font-bold text-indigo-600">⚠️ Hậu quả:</strong> 
-                            <span className="ml-1">{scenarios[selectedScenario].consequence}</span>
-                          </p>
-                        </div>
-                        <p className="text-xs xs:text-sm md:text-base text-slate-600 leading-relaxed font-medium bg-gradient-to-br from-white/80 to-blue-50/80 p-3 xs:p-4 rounded-lg xs:rounded-xl border border-blue-100/50 break-words">
-                          {scenarios[selectedScenario].description}
-                        </p>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => setSelectedScenario(null)}
+                          className="text-white hover:bg-white/20 flex-shrink-0 h-7 w-7 xs:h-8 xs:w-8 sm:h-10 sm:w-10"
+                        >
+                          <X className="h-3.5 w-3.5 xs:h-4 xs:w-4 sm:h-5 sm:w-5" />
+                        </Button>
                       </div>
                     </div>
-                  </div>
+
+                    {/* Content */}
+                    <div className="p-3 xs:p-4 sm:p-6 space-y-3 xs:space-y-4 sm:space-y-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 xs:gap-6 sm:gap-8">
+                        <motion.div 
+                          className="h-48 xs:h-56 sm:h-64 md:h-72 bg-white rounded-2xl flex items-center justify-center p-4 xs:p-5 sm:p-6 shadow-md"
+                          initial={{ scale: 0.9 }}
+                          animate={{ scale: 1 }}
+                          transition={{ type: "spring", stiffness: 200 }}
+                        >
+                          <ScenarioVisual scenarioIndex={selectedScenario} />
+                        </motion.div>
+                        
+                        <div className="flex flex-col justify-start w-full space-y-3 xs:space-y-4">
+                          <div className="space-y-2 xs:space-y-2.5 bg-white/60 rounded-lg xs:rounded-xl p-2.5 xs:p-3 sm:p-4 border-2 border-border">
+                            <p className="text-xs xs:text-sm md:text-base text-slate-700 font-medium break-words">
+                              <strong className={`font-bold ${
+                                selectedScenario === 2 ? 'text-emerald-600' : 'text-red-600'
+                              }`}>👤 Tài xế:</strong> 
+                              <span className="ml-1">{scenarios[selectedScenario].driver}</span>
+                            </p>
+                            <p className="text-xs xs:text-sm md:text-base text-slate-700 font-medium break-words">
+                              <strong className={`font-bold ${
+                                selectedScenario === 2 ? 'text-emerald-600' : 'text-red-600'
+                              }`}>⚠️ Hậu quả:</strong> 
+                              <span className="ml-1">{scenarios[selectedScenario].consequence}</span>
+                            </p>
+                          </div>
+
+                          <div className={`p-3 xs:p-4 rounded-lg xs:rounded-xl border-l-4 ${
+                            selectedScenario === 2 
+                              ? 'bg-emerald-50/80 border-emerald-500' 
+                              : 'bg-red-50/80 border-red-500'
+                          }`}>
+                            <p className="text-xs xs:text-sm md:text-base text-foreground font-medium leading-relaxed break-words">
+                              {scenarios[selectedScenario].description}
+                            </p>
+                          </div>
+
+                          {selectedScenario === 0 && (
+                            <div className="space-y-2 xs:space-y-3 p-3 xs:p-4 rounded-lg xs:rounded-xl bg-red-50/60 border border-red-200">
+                              <h4 className="font-bold text-xs xs:text-sm sm:text-base text-red-700">Bài học:</h4>
+                              <ul className="text-xs xs:text-sm text-red-600 space-y-1 xs:space-y-1.5">
+                                <li>• Dân tộc và giai cấp có liên kết sinh tử không thể tách rời</li>
+                                <li>• Suy vong dân tộc → cả giai cấp cũng phải chết theo</li>
+                                <li>• Giai cấp thống trị phải bảo vệ lợi ích của dân tộc</li>
+                              </ul>
+                            </div>
+                          )}
+
+                          {selectedScenario === 1 && (
+                            <div className="space-y-2 xs:space-y-3 p-3 xs:p-4 rounded-lg xs:rounded-xl bg-red-50/60 border border-red-200">
+                              <h4 className="font-bold text-xs xs:text-sm sm:text-base text-red-700">Bài học:</h4>
+                              <ul className="text-xs xs:text-sm text-red-600 space-y-1 xs:space-y-1.5">
+                                <li>• Giai cấp phản động sẽ lợi dụng quyền lãnh đạo cho mục đích riêng</li>
+                                <li>• Những quyết định sai lầm của giai cấp phản động đẩy dân tộc vào khủng hoảng</li>
+                                <li>• Cách mạng bùng nổ khi dân tộc không còn chịu được</li>
+                              </ul>
+                            </div>
+                          )}
+
+                          {selectedScenario === 2 && (
+                            <div className="space-y-2 xs:space-y-3 p-3 xs:p-4 rounded-lg xs:rounded-xl bg-emerald-50/60 border border-emerald-200">
+                              <h4 className="font-bold text-xs xs:text-sm sm:text-base text-emerald-700">Bài học:</h4>
+                              <ul className="text-xs xs:text-sm text-emerald-600 space-y-1 xs:space-y-1.5">
+                                <li>• Giai cấp tiên phong là đội tiên phong của giai cấp công nhân</li>
+                                <li>• Lãnh đạo xã hội theo con đường tiến bộ để phục vụ lợi ích chung</li>
+                                <li>• Dân tộc và giai cấp công nhân cùng phát triển và thịnh vượng</li>
+                              </ul>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
                 </motion.div>
               )}
             </AnimatePresence>
+
+            {/* Scenario Details - Original Inline (Disabled) */}
+            {/* Disabled: Use modal view instead */}
           </div>
         </motion.div>
 
@@ -1014,6 +1089,121 @@ const NationalityClassSection = () => {
           </div>
         </motion. div>
       </motion.div>
+
+      {/* Modal for Metaphor Cards */}
+      <AnimatePresence>
+        {selectedMetaphor && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-2 xs:p-3 sm:p-4 bg-foreground/50 backdrop-blur-sm"
+            onClick={() => setSelectedMetaphor(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="w-full max-w-2xl bg-card rounded-xl xs:rounded-2xl shadow-2xl border-2 border-border overflow-hidden max-h-[95vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header with Gradient */}
+              <div className="relative p-3 xs:p-4 sm:p-6 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600">
+                <div className="absolute inset-0 bg-black/20" />
+                <div className="relative z-10 flex justify-between items-start gap-2 xs:gap-3">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-base xs:text-lg sm:text-2xl font-bold text-white break-words">
+                      {selectedMetaphor.title}
+                    </h3>
+                    <p className="text-white/90 font-semibold text-xs xs:text-sm sm:text-lg break-words mt-1">
+                      {selectedMetaphor.description}
+                    </p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setSelectedMetaphor(null)}
+                    className="text-white hover:bg-white/20 flex-shrink-0 h-7 w-7 xs:h-8 xs:w-8 sm:h-10 sm:w-10"
+                  >
+                    <X className="h-3.5 w-3.5 xs:h-4 xs:w-4 sm:h-5 sm:w-5" />
+                  </Button>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-3 xs:p-4 sm:p-6 space-y-3 xs:space-y-4 sm:space-y-6">
+                {selectedMetaphor.id === "bus" ? (
+                  <>
+                    <div className="h-48 xs:h-56 sm:h-64 bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl p-4 flex items-center justify-center">
+                      <div className="w-full h-full">
+                        <AnimatedBus variant="normal" />
+                      </div>
+                    </div>
+                    <div className="space-y-3 xs:space-y-4 sm:space-y-5">
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-2 text-xs xs:text-sm sm:text-base">
+                          Ý nghĩa của chiếc xe bus:
+                        </h4>
+                        <p className="text-xs xs:text-sm sm:text-base text-foreground/80 leading-relaxed break-words">
+                          Dân tộc được so sánh như một chiếc xe bus - một phương tiện chứa toàn bộ xã hội. Nó có khả năng di chuyển, phát triển, nhưng hướng đi của nó hoàn toàn phụ thuộc vào ai đang lái.
+                        </p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-2 text-xs xs:text-sm sm:text-base">
+                          Hành khách trên xe:
+                        </h4>
+                        <p className="text-xs xs:text-sm sm:text-base text-foreground/80 leading-relaxed break-words">
+                          Tất cả các giai cấp, tầng lớp, dân tộc thiểu số đều là hành khách trên chiếc xe bus này. Họ không quyết định hướng đi mà chỉ di chuyển theo chiến lược của người lái.
+                        </p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-2 text-xs xs:text-sm sm:text-base">
+                          Liên kết sinh tử:
+                        </h4>
+                        <p className="text-xs xs:text-sm sm:text-base text-foreground/80 leading-relaxed break-words">
+                          Nếu dân tộc suy vong, giai cấp thống trị cũng không thể tồn tại. Đó là lý do vì sao giai cấp thống trị phải quan tâm đến huyết mạch của dân tộc - vì chính nó là bộ phận không thể tách rời của dân tộc.
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="h-48 xs:h-56 sm:h-64 bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl flex items-center justify-center text-8xl">
+                      👨‍💼
+                    </div>
+                    <div className="space-y-3 xs:space-y-4 sm:space-y-5">
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-2 text-xs xs:text-sm sm:text-base">
+                          Vai trò của người lái:
+                        </h4>
+                        <p className="text-xs xs:text-sm sm:text-base text-foreground/80 leading-relaxed break-words">
+                          Giai cấp thống trị được so sánh như người lái xe. Người lái xe là người quyết định chiếc xe bus sẽ đi đâu, chạy nhanh hay chậm, rẽ trái hay rẽ phải.
+                        </p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-2 text-xs xs:text-sm sm:text-base">
+                          Quyền lực của giai cấp:
+                        </h4>
+                        <p className="text-xs xs:text-sm sm:text-base text-foreground/80 leading-relaxed break-words">
+                          Giai cấp nào nắm được quyền lãnh đạo sẽ quyết định xu hướng phát triển của toàn bộ dân tộc. Nếu là giai cấp tiến bộ, dân tộc sẽ tiến lên. Nếu là giai cấp phản động, dân tộc sẽ lao xuống vực thẳm.
+                        </p>
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-2 text-xs xs:text-sm sm:text-base">
+                          Lợi ích chung:
+                        </h4>
+                        <p className="text-xs xs:text-sm sm:text-base text-foreground/80 leading-relaxed break-words">
+                          Người lái tốt là người bảo vệ lợi ích chung của dân tộc. Họ biết rằng nếu chiếc xe tốt, họ cũng sẽ tốt. Nếu chiếc xe hỏng, họ cũng chết theo.
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
