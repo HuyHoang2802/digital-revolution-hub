@@ -96,7 +96,7 @@ const SimulateRevolutionSection = () => {
               </li>
               <li className="flex gap-3">
                 <span className="text-blue-600 font-bold">📋 Quan hệ sản xuất:</span>
-                <span>Quy chế cũ: Chấm công giấy, trả lương tiền mặt, cấm dùng Internet!</span>
+                <span>Quy chế cũ: Chấm công giấy, trả lương tiền mặt, giải quyết thông qua giấy tờ!</span>
               </li>
             </ul>
             <p className="mt-4 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 font-semibold">
