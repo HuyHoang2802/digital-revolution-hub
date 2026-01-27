@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Check, RotateCcw, Trophy, AlertTriangle, Gamepad2, Star, Zap, Brain, Target, Clock, Medal, User, Award } from "lucide-react";
+import { X, Check, RotateCcw, Trophy, AlertTriangle, Gamepad2, Star, Zap, Brain, Target, Clock, Medal, User, Award, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
@@ -615,6 +615,7 @@ const GameSection = ({ sessionId, onGameComplete }: GameSectionProps) => {
   const [startTime, setStartTime] = useState(0);
   const [finishTime, setFinishTime] = useState(0);
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [showStats, setShowStats] = useState(false);
 
   useEffect(() => {
     if (realtimeLeaderboard.length > 0) {
@@ -1129,6 +1130,136 @@ await updateGameSession(score, currentQuestion + 1, false, durationSeconds);
             </motion.div>
           </div>
         </div>
+
+        {/* AI Statistics Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-12 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 border border-blue-200 rounded-2xl p-6 shadow-xl"
+        >
+          <button
+            onClick={() => setShowStats(!showStats)}
+            className="w-full flex items-center justify-between group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-lg bg-gradient-to-br from-cyan-100 to-blue-100 group-hover:from-cyan-200 group-hover:to-blue-200 transition-colors">
+                <Brain className="h-5 w-5 text-cyan-600" />
+              </div>
+              <div className="text-left">
+                <h3 className="font-bold text-slate-900 text-lg">Phân Tích Lý Thuyết & Công Cụ Hỗ Trợ</h3>
+                <p className="text-xs text-slate-600 mt-1">Xem chi tiết AI và Prompts được sử dụng</p>
+              </div>
+            </div>
+            <motion.div
+              animate={{ rotate: showStats ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ChevronDown className="h-5 w-5 text-slate-500" />
+            </motion.div>
+          </button>
+
+          <AnimatePresence>
+            {showStats && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="mt-6 space-y-6 pt-6 border-t border-blue-200"
+              >
+                {/* AI Models Section */}
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-slate-900 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-cyan-600 rounded-full"></span>
+                    AI Models Được Sử Dụng
+                  </h4>
+                  <div className="space-y-2">
+                    <div className="p-3 rounded-lg bg-cyan-50 border border-cyan-200 hover:border-cyan-400 transition-colors">
+                      <p className="text-sm font-medium text-slate-900">Claude 3.5 Sonnet</p>
+                      <p className="text-xs text-slate-600 mt-1">Chính - Phân tích lý thuyết Mác Lê Niên, xây dựng cấu trúc câu hỏi</p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-cyan-50 border border-cyan-200 hover:border-cyan-400 transition-colors">
+                      <p className="text-sm font-medium text-slate-900">GitHub Copilot</p>
+                      <p className="text-xs text-slate-600 mt-1">Hỗ trợ React/TypeScript implementation</p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-cyan-50 border border-cyan-200 hover:border-cyan-400 transition-colors">
+                      <p className="text-sm font-medium text-slate-900">GPT-4o</p>
+                      <p className="text-xs text-slate-600 mt-1">Kiểm chứng độ chính xác nội dung lý thuyết</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Prompts Section */}
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-slate-900 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-purple-600 rounded-full"></span>
+                    Prompts Về Lý Thuyết
+                  </h4>
+                  <div className="space-y-2">
+                    {[
+                      "Phân tích mối quan hệ biện chứng giữa giai cấp và dân tộc theo quan điểm Mác Lê Niên",
+                      "Giải thích vai trò của giai cấp công nhân trong cách mạng vô sản thế giới",
+                      "Phân tích mối liên hệ giữa chủ nghĩa thực dân và áp bức giai cấp",
+                      "Xây dựng hệ thống câu hỏi trắc nghiệm về lý thuyết giai cấp, dân tộc và nhân loại",
+                      "Tạo kịch bản vai trò để người học áp dụng lý thuyết vào thực tế",
+                      "Phát triển trò chơi tương tác về lịch sử cách mạng và phong trào công nhân"
+                    ].map((prompt, idx) => (
+                      <div key={idx} className="p-3 rounded-lg bg-purple-50 border border-purple-200 hover:border-purple-400 transition-colors">
+                        <p className="text-sm text-slate-800 leading-relaxed">▪ {prompt}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Key Concepts Section */}
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-slate-900 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-green-600 rounded-full"></span>
+                    Các Khái Niệm Chính Được Triển Khai
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {[
+                      { icon: "✓", text: "Câu hỏi cơ bản (Basic Level)" },
+                      { icon: "✓", text: "Câu hỏi nâng cao (Advanced Level)" },
+                      { icon: "✓", text: "Kịch bản vai trò (Roleplay Level)" },
+                      { icon: "✓", text: "Xếp hạng thời gian thực (Realtime)" },
+                      { icon: "✓", text: "Tracking với Supabase" },
+                      { icon: "✓", text: "Framer Motion animations" }
+                    ].map((item, idx) => (
+                      <div key={idx} className="p-2.5 rounded-lg bg-green-50 border border-green-200 flex items-start gap-2 hover:border-green-400 transition-colors">
+                        <span className="text-green-600 font-bold flex-shrink-0">{item.icon}</span>
+                        <span className="text-sm text-slate-800">{item.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Learning Objectives Section */}
+                <div className="space-y-3">
+                  <h4 className="font-semibold text-slate-900 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-orange-600 rounded-full"></span>
+                    Mục Tiêu Học Tập
+                  </h4>
+                  <div className="space-y-2">
+                    {[
+                      "Nắm vững mối liên hệ biện chứng giữa giai cấp, dân tộc và nhân loại",
+                      "Hiểu rõ vai trò lãnh đạo của giai cấp công nhân",
+                      "Phân tích các mâu thuẫn chính trong xã hội giai cấp",
+                      "Nhận biết tính tiến bộ của chủ nghĩa xã hội",
+                      "Áp dụng lý thuyết vào phân tích các tình huống thực tế"
+                    ].map((objective, idx) => (
+                      <div key={idx} className="p-3 rounded-lg bg-orange-50 border border-orange-200 flex items-start gap-3 hover:border-orange-400 transition-colors">
+                        <span className="text-orange-600 font-bold flex-shrink-0">{idx + 1}.</span>
+                        <span className="text-sm text-slate-800">{objective}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );
