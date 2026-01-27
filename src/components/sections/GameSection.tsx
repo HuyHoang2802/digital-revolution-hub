@@ -1177,7 +1177,7 @@ await updateGameSession(score, currentQuestion + 1, false, durationSeconds);
                   <div className="space-y-2">
                     <div className="p-3 rounded-lg bg-cyan-50 border border-cyan-200 hover:border-cyan-400 transition-colors">
                       <p className="text-sm font-medium text-slate-900">Claude 3.5 Sonnet</p>
-                      <p className="text-xs text-slate-600 mt-1">Chính - Phân tích lý thuyết Mác Lê Niên, xây dựng cấu trúc câu hỏi</p>
+                      <p className="text-xs text-slate-600 mt-1">Chính - Phân tích lý thuyết Mác Lê Nin, xây dựng cấu trúc câu hỏi</p>
                     </div>
                     <div className="p-3 rounded-lg bg-cyan-50 border border-cyan-200 hover:border-cyan-400 transition-colors">
                       <p className="text-sm font-medium text-slate-900">GitHub Copilot</p>
@@ -1198,7 +1198,7 @@ await updateGameSession(score, currentQuestion + 1, false, durationSeconds);
                   </h4>
                   <div className="space-y-2">
                     {[
-                      "Phân tích mối quan hệ biện chứng giữa giai cấp và dân tộc theo quan điểm Mác Lê Niên",
+                      "Phân tích mối quan hệ biện chứng giữa giai cấp và dân tộc theo quan điểm Mác Lê Nin",
                       "Giải thích vai trò của giai cấp công nhân trong cách mạng vô sản thế giới",
                       "Phân tích mối liên hệ giữa chủ nghĩa thực dân và áp bức giai cấp",
                       "Xây dựng hệ thống câu hỏi trắc nghiệm về lý thuyết giai cấp, dân tộc và nhân loại",
